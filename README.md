@@ -183,13 +183,6 @@ The U.S produces far more titles than any other count country, followed by India
 ## 10. Deliverables
 
 | Deliverable | Description | Location |
-|-------------|-------------|----------|
-| [Name] | [What it contains] | [`/path/to/file`] |
-| [Name] | [What it contains] | [`/path/to/file`] |
-| [Name] | [What it contains] | [`/path/to/file`] |
-
-
-| Deliverable | Description | Location |
 |-------------|--------------|----------|
 | Cleaned dataset | Netflix titles data with nulls handled, duplicates checked, and datetime fields formatted |  `data/raw/` |
 | Analysis notebook | Full cleaning, analysis, and visualization code | notebooks/`Netflix_EDA_Analysis.ipynb` |
@@ -209,5 +202,4 @@ Data Analyst
 
 ---
 
-*Last updated: [Month YYYY]*
-*If this template helped you, consider starring the repository.*
+*Last updated: July 2026*
