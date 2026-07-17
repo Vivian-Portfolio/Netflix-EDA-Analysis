@@ -33,6 +33,7 @@
 
 ---
 
+
 ## 1. Project Overview
 
 **Context:** Netflix's catalog spans thousands of titles across countries, genres, and decades, but the raw dataset alone doesn't reveal patterns in how that catalog has grown or what it's made up of.
@@ -44,6 +45,7 @@
 **Outcome:** A cleaned, analysis-ready dataset and a set of visual insights showing that movies (6,131) outnumber TV shows (2,666) by roughly 2-to-1, with content additions peaking in 2019 before declining slightly through 2021.
 
 ---
+
 
 ## 2. Objectives
 
