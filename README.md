@@ -6,12 +6,12 @@
 ## ⚙️ Project Type Flags
 > *Check what applies. This helps reviewers and collaborators understand the nature of the work at a glance. Delete this block before publishing.*
 
-- [*] Exploratory Data Analysis (EDA)
+- [x] Exploratory Data Analysis (EDA)
 - [ ] SQL Analysis / Querying
-- [*] Dashboard / Data Visualization
+- [x] Dashboard / Data Visualization
 - [ ] Data Pipeline / ETL
 - [ ] Predictive Modelling / Machine Learning
-- [*] Data Cleaning / Wrangling
+- [x] Data Cleaning / Wrangling
 - [ ] End-to-End (multiple of the above)
 - [ ] Other: ___________
 
@@ -36,17 +36,14 @@
 ## 1. Project Overview
 
 <!--
- The dataset contains information on 8,807 movies and TV shows available on Netflix, including show ID, title, content type, director, cast, country, date added, release year, rating, duration, genre, and description.
--->
 
-**Context:** [The business, research, or personal situation that motivated this project.]
+**Context:** Netflix's catalog spans thousands of titles across countries, genres, and decades, but the raw dataset alone doesn't reveal patterns in how that catalog has grown or what it's made up of.
 
-**Problem Statement:** [The specific question or challenge you were addressing.]
+**Problem Statement:** What trends exist in Netflix's content library - by type, country of production, rating, and growth over time - and what do those trends suggest about the platform's content strategy?
 
-**Approach:** [In 1–2 sentences - how did you tackle it?]
+**Approach:** Cleaned the raw dataset (handling missing values, duplicates, and formatting issues) in Python, then used pandas and visualizations to explore patterns in content type, production countries, ratings, and additions over time.
 
-**Outcome:** [What did you produce or discover?]
-
+**Outcome:** A cleaned, analysis-ready dataset and a set of visual insights showing that movies outweigh TV shows, the U.S. leads content production, TV-MA is the most common rating, and additions to the catalog peaked around 2019-2020.
 ---
 
 ## 2. Objectives
