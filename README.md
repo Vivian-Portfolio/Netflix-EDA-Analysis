@@ -87,373 +87,100 @@ Data Analysis |
 ## 4. Repository Structure
 
 ```
-[project-root]/
+Netflix-EDA-Analysis/
 │
 ├── data/
-│   ├── raw/                  # Original, unmodified source data - never edited
-│   ├── processed/            # Cleaned and transformed data
-│   └── external/             # Reference data, lookup tables, third-party files
+│   └── raw/              # Original, unmodified Netflix dataset (netflix_titles.csv)
 │
-├── notebooks/                # Jupyter, R Markdown, or Colab notebooks
+├── notebooks/            # Colab notebook with full cleaning, analysis, and visualizations
 │
-├── scripts/                  # Reusable .py, .R, or .sh processing files
+├── reports/              # Written summary report of findings
 │
-├── queries/                  # SQL files (retain this folder for SQL-heavy projects)
-│   ├── exploratory/          # Ad-hoc or investigative queries
-│   ├── transformations/      # Cleaning and reshaping logic
-│   └── final/                # Production-ready or presentation queries
+├── visuals/              # Exported charts and graphs
 │
-├── reports/                  # Final outputs: PDFs, slide decks, Word docs
-│
-├── visuals/                  # Exported charts, dashboard screenshots, ERD diagrams
-│
-├── docs/                     # Data dictionaries, schema notes, reference material
-│
-├── project_metadata.yml      # Machine-readable metadata (optional)
-└── README.md                 # You are here
+├── README.md             # You are here
+└── project_metadata.yml  # Project metadata
 ```
-
-> ⚠️ *Delete folders you didn't use. An empty folder is worse than no folder.*
-> SQL-heavy projects: keep `queries/`. Analysis-only projects: keep `notebooks/`. Both? Keep both.
 
 ---
 
 ## 5. Data Workflow
 
-<!--
-  Show how data moved through your project - from source to output.
-  Every transformation decision should be traceable here.
+1. **Source:** Netflix titles dataset downloaded via kagglehub (source: shivamb/netflix-shows on Kaggle), containing 8,807 records with 12 columns.
+2. **Ingestion:** Dataset read into a pandas DataFrame using pd.read_csv() with latin1 encoding to handle special characters in text fields.
+3. **Cleaning:** - Filled missing values in director, cast, country, rating, and duration with "Unknown" to preserve as many records as possible.
+   - Removed rows with missing date_added, since this field was essential for time-based analysis.
+   - Checked for and confirmed no duplicate rows.
+   - Converted date_added to datetime format and extracted year_added for trend analysis.
+   - Standardized column names and text values to lowercase, removing unnecessary whitespace.
+5. **Analysis:** Used pandas (value_counts, groupby, sort_index) to break down content by type, year added, release year, country, and rating.
+6. **Output:** Built bar charts, pie charts, line charts, histograms, and box plots to illustrate the trends found in the analysis and summarized analysis report .
 
-  WHAT GOOD LOOKS LIKE:
-  1. Source: "Monthly CSV exports pulled from the internal POS system.
-              Five files, one per region, covering Jan 2023–Jun 2024."
-  2. Ingestion: "Loaded into Python using pandas. Files concatenated into
-                 a single dataframe (approx. 340,000 rows)."
-  3. Cleaning: "Removed 1.2% of rows with null transaction IDs.
-                Standardised date formats across regional files.
-                Resolved product category naming inconsistencies (3 variants → 1)."
-  4. Transformation: "Created a returns_rate field at product-category level.
-                      Aggregated to weekly and regional grain for trend analysis."
-  5. Analysis: "Descriptive statistics, regional comparison, return rate
-                segmentation by product category."
-  6. Output: "Summary report (PDF), annotated notebook, processed CSV."
-
-  WHAT TO AVOID:
-  ❌ "Data was cleaned and analysed." (No chain. No decisions. No trust.)
--->
-
-```
-[Data Source(s)]
-      ↓
-[Ingestion / Collection Method]
-      ↓
-[Cleaning & Transformation]
-      ↓
-[Analysis / Modelling / Querying]
-      ↓
-[Output / Visualisation / Reporting]
-```
-
-1. **Source:** [Where did the data come from? Format, size, access method.]
-2. **Ingestion:** [How was it brought in?]
-3. **Cleaning:** [What issues did you find and fix?]
-4. **Transformation:** [What new fields, aggregations, or structures did you create?]
-5. **Analysis:** [What methods - statistical, visual, query-based, model-based?]
-6. **Output:** [What form do the results take?]
 
 ---
 
-## 6. Data Model & Schema
-
-<!--
-  Define your fields so that someone reading your analysis can follow along
-  without digging through your code.
-
-  WHAT GOOD LOOKS LIKE (one row example):
-  | transaction_id | string | Unique identifier per sales transaction | TXN-00482 |
-  | return_flag    | boolean | Whether the transaction included a return | TRUE |
-  | region_code    | string | Two-letter identifier for store region | "NE" |
-
-  WHAT TO AVOID:
-  ❌ Skipping this section because "the field names are self-explanatory."
-     They're not. Not to a reviewer. Not to you in six months.
-
-  📌 FOR SQL PROJECTS: If you have multiple tables, create one block per table.
-     Describe join keys and relationships here. Your ERD (Section 7) will
-     visualise what this section describes in text.
-
-  📌 FOR NON-SQL PROJECTS: Describe the shape of your dataset informally
-     if a formal schema doesn't apply. Even one paragraph is more helpful than nothing.
--->
-
-### Dataset / Table: `[name]`
-
-| Field Name | Data Type | Description | Example Value |
-|------------|-----------|-------------|---------------|
-| `[field_1]` | [string / int / date / float / boolean] | [What this field represents] | [Non-sensitive example] |
-| `[field_2]` | [string / int / date / float / boolean] | [What this field represents] | [Non-sensitive example] |
-| `[field_3]` | [string / int / date / float / boolean] | [What this field represents] | [Non-sensitive example] |
-
-> **Row count (approx.):** [X rows]
-> **Date range:** [Start] – [End]
-> **Key join / relationship:** [e.g., `orders.customer_id` → `customers.id`]
-
-*Add additional table blocks as needed for multi-table projects.*
-
----
-
-## 7. ERD - Entity Relationship Diagram
-### *(Primarily for SQL Projects - remove this section if not applicable)*
-
-<!--
-  An ERD shows how your tables connect to each other visually.
-  It is the fastest way for a reviewer to understand the data structure
-  of a SQL project without reading every query.
-
-  HOW TO INCLUDE YOUR ERD:
-  Option A - Image embed (most common):
-    Export your ERD from dbdiagram.io, DBeaver, Lucidchart, or similar.
-    Save to /visuals/erd.png and reference it below.
-
-  Option B - dbdiagram.io code block (version-controllable):
-    Paste your schema definition code directly in the fenced block below.
-    Anyone can paste it into dbdiagram.io to regenerate the visual.
-
-  Option C - Mermaid diagram (renders natively in GitHub):
-    Use the mermaid code block syntax below.
-    GitHub will render this as a diagram automatically.
-
-  PICK ONE. Don't use all three. Delete the options you don't use.
--->
-
-### Option A - Embedded Image
-![ERD Diagram](visuals/erd.png)
-*[Brief caption: e.g., "Three-table schema - orders, customers, and products joined on shared IDs."]*
-
----
-
-### Option B - dbdiagram.io Schema Definition
-```
-Table orders {
-  order_id    int     [pk]
-  customer_id int     [ref: > customers.customer_id]
-  product_id  int     [ref: > products.product_id]
-  order_date  date
-  amount      float
-}
-
-Table customers {
-  customer_id int  [pk]
-  region_code string
-  signup_date date
-}
-
-Table products {
-  product_id   int    [pk]
-  category     string
-  unit_price   float
-}
-```
-*Paste this into [dbdiagram.io](https://dbdiagram.io) to view the visual.*
-
----
-
-### Option C - Mermaid Diagram *(renders on GitHub)*
-```mermaid
-erDiagram
-    ORDERS {
-        int order_id PK
-        int customer_id FK
-        int product_id FK
-        date order_date
-        float amount
-    }
-    CUSTOMERS {
-        int customer_id PK
-        string region_code
-        date signup_date
-    }
-    PRODUCTS {
-        int product_id PK
-        string category
-        float unit_price
-    }
-    ORDERS ||--o{ CUSTOMERS : "placed by"
-    ORDERS ||--o{ PRODUCTS : "contains"
-```
-
----
-
-**Table Relationships Summary:**
-
-| Relationship | Join Key | Type |
-|-------------|----------|------|
-| `orders` → `customers` | `customer_id` | Many-to-One |
-| `orders` → `products` | `product_id` | Many-to-One |
-| [Add rows as needed] | | |
-
----
-
-## 8. Analysis & Metrics
-
-<!--
-  Explain what you measured and how - before you share what you found.
-
-  WHAT GOOD LOOKS LIKE:
-  Metric: "Customer Return Rate"
-  Definition: "Number of transactions flagged as returns divided by total
-               transactions, calculated at product-category and regional grain."
-  Why It Matters: "Return rate - not sales volume - was hypothesised to
-                  explain regional revenue gaps. This metric tests that hypothesis."
-
-  WHAT TO AVOID:
-  ❌ Defining a metric only in code: SUM(returns) / COUNT(transaction_id)
-     That's an implementation. Write the plain-language definition here.
-     Both belong in your project - the definition in the README,
-     the implementation in the code.
--->
+## 6. Analysis & Metrics
 
 ### Analytical Approach
 
-[Describe how you approached the analysis. Were you exploring patterns? Testing a hypothesis? Building and validating a pipeline? Be honest about your method - exploratory work is valid, just call it that.]
+This was primarily exploratory examining the cleaned dataset to uncover patterns in content type, growth over time, and audience ratings, rather than testing a specific hypothesis. Descriptive statistics and grouped counts were used to summarize the catalog's composition and trends.
 
 ### Key Metrics Defined
 
 | Metric | Plain-Language Definition | Why It Matters |
-|--------|--------------------------|----------------|
-| `[Metric 1]` | [What it measures, in one sentence] | [What decision or question it answers] |
-| `[Metric 2]` | [What it measures, in one sentence] | [What decision or question it answers] |
-| `[Metric 3]` | [What it measures, in one sentence] | [What decision or question it answers] |
+|--------|---------------------------|-----------------|
+| `type distribution` | Count of titles by Movie vs. TV Show | Shows the overall composition of Netflix's catalog |
+| `year_added counts` | Number of titles added to Netflix per calendar year | Reveals growth trends and peak content-acquisition periods |
+| `country frequency` | Count of titles by producing country | Identifies which markets contribute most to the catalog |
+| `rating distribution` | Count of titles by content rating (e.g., TV-MA, PG-13) | Indicates the intended audience maturity of the catalog |
 
 ### Methods Used
 
-- [e.g., Descriptive statistics - distribution, central tendency, outlier detection]
-- [e.g., Trend analysis across [time period]]
-- [e.g., Segmentation / group comparison by [dimension]]
-- [e.g., Correlation analysis between [variable A] and [variable B]]
-- [e.g., SQL window functions for [specific aggregation]]
-- [e.g., Custom aggregation or transformation logic in [tool]]
+- Descriptive statistics - value counts, distribution, and central tendency (mean, min, max, standard deviation) for release year
+- Trend analysis across year added (2008–2021)
+- Segmentation / group  comparison by content type, country, and rating
 
 ---
 
-## 9. Key Insights
+## 7. Key Insights
 
-<!--
-  Findings + implications. Not just what happened - what it means.
 
-  WHAT GOOD LOOKS LIKE:
-  ✅ "Return rates, not sales volume, explain Region A's underperformance.
-      Region A's return rate on home goods was 34% - more than double the
-      company average. Revenue was not lost at the point of sale; it was
-      lost post-sale through refunds. This points to a fulfilment or
-      product quality issue specific to that region, not a demand problem."
 
-  WHAT TO AVOID:
-  ❌ "Region A had lower revenue than other regions in Q4."
-     (That's an observation. It describes what happened.
-      An insight says what it means and where to look next.)
+**Insight 1: Movies dominate the catalog**
+At 6,131 titles vs. 2,666 TV Shows, movies make up about 70% of Netflix's catalog in this dataset. This suggests Netflix's content strategy still leans heavily on film licensing/production even as TV Shows have grown as a category - useful context for anyone analyzing content investment priorities.
 
-  Aim for 3–6 insights. Quality over quantity.
--->
+**Insight 2:  Content growth peaked in 2019, not the most recent year**
+Additions rose sharply from 429 titles in 2016 to a peak of 2,016 in 2019, before declining to 1,879 (2020) and 1,498 (2021). This points to a slowdown in catalog expansion rather than continued acceleration - worth investigating whether this reflects licensing costs, a shift toward original content, or incomplete 2021 data in the source.
 
-**Insight 1: [Short descriptive headline]**
-[What you found + what it suggests. One short paragraph.]
+**Insight 3: Mature-audience content dominate the catalog**
+TV-MA is the most common classification across titles and drama-related genres appears most frequently overall - together these suggest Netflix's catalog is weighted towards matures-audience rather than family-friendly or lighter content relevant for anyone assessing audience  targeting or content - acquisition strategy. 
 
-**Insight 2: [Short descriptive headline]**
-[What you found + what it suggests.]
-
-**Insight 3: [Short descriptive headline]**
-[What you found + what it suggests.]
-
-**Insight 4 (if applicable): [Short descriptive headline]**
-[What you found + what it suggests.]
+**Insight 4: The United States is the leading content production country**
+The U.S produces far more titles than any other count country, followed by India (972), and far ahead of the UK (419) nearly three times far than the U.S output. This  concentation suggests Netflix's  catalog, despite being a global platform, is still heavily anchored in America- product content with India standing out as the clearest secondary hub.
 
 ---
 
-## 10. Recommendations
-
-<!--
-  Action-oriented. Addressed to a real audience.
-  Tied explicitly to the insight that supports each one.
-
-  WHAT GOOD LOOKS LIKE:
-  Priority: High
-  Recommendation: "Conduct a fulfilment audit for home goods deliveries
-                   in Region A - specifically investigating whether returns
-                   correlate with a particular warehouse, carrier, or SKU batch."
-  Based On: Insight 1 - return rate anomaly in Region A
-  Owner: Operations / Supply Chain team
-
-  WHAT TO AVOID:
-  ❌ "Improve the return rate."
-     (Not actionable. Doesn't say who, how, or where to start.)
-  ❌ "Further analysis is needed."
-     (This is a placeholder, not a recommendation.)
--->
+## 8. Recommendations
 
 | Priority | Recommendation | Based On | Suggested Owner |
-|----------|---------------|----------|-----------------|
-| High | [Specific, actionable step] | [Insight it comes from] | [Who should act] |
-| Medium | [Specific, actionable step] | [Insight it comes from] | [Who should act] |
-| Low | [Exploratory or longer-term suggestion] | [Insight it comes from] | [Who should act] |
-
+|----------|-----------------|----------|------------------|
+| High | Investigate why content additions declined after the 2019 peak - determine if this reflects a strategic shift toward original productions, rising licensing costs, or incomplete data for 2021 | Insight 2 - growth peaked in 2019 | Content Strategy / Data team |
+| Medium | Break down the movie-to-TV-show ratio by country to see if the 70/30 split holds globally or varies by region | Insight 1 - movie-heavy catalog | Content Acquisition team |
+| Low | Extend the analysis to include genre-level trends over time for a fuller picture of catalog evolution | Insight 3 - concentration in recent years | Data Analytics team |
 ---
 
-## 11. Assumptions & Limitations
-
-<!--
-  WHAT GOOD LOOKS LIKE:
-  Assumption: "Transaction records were assumed to be complete for all five regions.
-               No validation was performed against source system record counts."
-  Limitation: "The analysis cannot distinguish between returns initiated by
-               the customer vs. returns initiated by the business (e.g., recalls).
-               If business-initiated returns are concentrated in Region A, the
-               return rate finding may reflect a policy decision, not a quality issue."
-
-  WHAT TO AVOID:
-  ❌ Leaving this section blank or writing "None known."
-     Every project has limitations. Documenting them is a sign of
-     analytical maturity - not a confession of failure.
--->
-
+## 9. Assumptions & Limitations
 ### Assumptions
-- [What did you treat as true without being able to verify?]
-- [What simplifications did you make for scope or feasibility?]
-- [What domain rules or definitions did you accept as given?]
+- The dataset was treated as a complete and accurate snapshot of Netflix's catalog at the time of extraction (via Kaggle), with no independent verification against Netflix's own records.
+- Missing director, cast, country, and rating values were assumed to be genuinely missing/unlisted rather than data entry errors, and were filled with "Unknown" rather than dropped.
 
 ### Limitations
-- [What gaps exist in the data?]
-- [What analysis was out of scope but could affect interpretation?]
-- [What would a more rigorous version of this project include?]
-- [Are there known biases in the data source or collection method?]
-
-> *The goal here is pre-emptive Q&A. What would a thoughtful skeptic push back on? Document the answer here, before they ask.*
-
+- The dataset only reflects titles available at one point in time - it does not capture titles that were removed from Netflix before or after this snapshot.
+- No viewer engagement or streaming data is included, so popularity or performance of titles cannot be assessed — only catalog composition.
+- The date_added field marks when a title was added to Netflix, not when it was actually produced or released, which limits precision when comparing production trends across countries.
 ---
 
-## 12. Future Enhancements
-
-<!--
-  WHAT GOOD LOOKS LIKE:
-  ✅ "Automate the monthly data pull from the POS export folder using
-      a scheduled Python script, replacing the current manual process."
-  ✅ "Expand the return rate analysis to include carrier-level data,
-      which was unavailable in this dataset but exists in the logistics system."
-
-  WHAT TO AVOID:
-  ❌ "Add a machine learning model."
-     (Vague, and disconnected from the actual findings of this project.)
-  ❌ Listing aspirational features that don't follow logically from the work.
--->
-
-- [ ] [Enhancement 1 - specific and traceable to a real gap in this project]
-- [ ] [Enhancement 2]
-- [ ] [Enhancement 3]
-- [ ] [Enhancement 4]
-
----
-
-## 13. Deliverables
+## 10. Deliverables
 
 | Deliverable | Description | Location |
 |-------------|-------------|----------|
@@ -461,16 +188,24 @@ erDiagram
 | [Name] | [What it contains] | [`/path/to/file`] |
 | [Name] | [What it contains] | [`/path/to/file`] |
 
+
+| Deliverable | Description | Location |
+|-------------|--------------|----------|
+| Cleaned dataset | Netflix titles data with nulls handled, duplicates checked, and datetime fields formatted |  `data/raw/` |
+| Analysis notebook | Full cleaning, analysis, and visualization code | notebooks/`Netflix_EDA_Analysis.ipynb` |
+| Live notebook (Colab) | Interactive version, viewable/run directly in-browser | `[Open in Colab](https://colab.research.google.com/drive/1QX6vx8r_Wic1w4rT_OH2fMzlT4Nh90Sf?usp=sharing)`|
+| Summary report | Written findings and insights | `reports/` |
+| Visualizations | Charts illustrating key trends | `visuals/` |
 ---
 
-## 14. Author
+## 11. Author
 
-**[Your Name]**
-[Your role or title - current or target]
+**Vivian Okwara | Lagos Nigeria**
+Data Analyst
 
-- 🔗 [LinkedIn URL]
-- 💼 [Portfolio or GitHub profile URL]
-- 📧 [Email - optional]
+- 🔗 https://Linkedin.com/in/okwara-vivian
+- 💼 https://Vivian-Portfolio.github.io
+- 📧 okwaravivian26@gmail.com
 
 ---
 
