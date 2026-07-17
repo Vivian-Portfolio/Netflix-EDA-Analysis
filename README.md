@@ -41,35 +41,22 @@
 
 **Approach:** Cleaned the raw dataset (handling missing values, duplicates, and formatting issues) in Python, then used pandas and visualizations to explore patterns in content type, production countries, ratings, and additions over time.
 
-**Outcome:** A cleaned, analysis-ready dataset and a set of visual insights showing that movies outweigh TV shows, the U.S. leads content production, TV-MA is the most common rating, and additions to the catalog peaked around 2019-2020.
+**Outcome:** A cleaned, analysis-ready dataset and a set of visual insights showing that movies (6,131) outnumber TV shows (2,666) by roughly 2-to-1, with content additions peaking in 2019 before declining slightly through 2021.
 
 ---
 
 ## 2. Objectives
 
-<!--
-  Write objectives that are specific enough to succeed or fail.
-  Use action-oriented verbs: Identify, Determine, Quantify, Build, Evaluate.
+- **Primary Objective:** Clean and explore the Netflix titles dataset to identify meaningful patterns in content type, country of origin, and audience ratings.
 
-  WHAT GOOD LOOKS LIKE:
-  ✅ "Determine whether customer churn rate correlates with support ticket volume."
-  ✅ "Identify the top three revenue-driving product categories across all regions."
-  ✅ "Build a reproducible pipeline that ingests and cleans daily sales exports."
+- **Secondary Objective 1:** Quantify the split between Movies and TV Shows in the catalog.
+  
+- **Secondary Objective 2:** Identify the leading content-producing countries.
+  
+- **Secondary Objective 3:**  Determine the most common content ratings and genres.
 
-  WHAT TO AVOID:
-  ❌ "Explore the data."
-  ❌ "Gain insights."
-  ❌ "Understand trends."
-  (These can't fail - which means they can't succeed either.)
--->
-
-- **Primary Objective:** [The main thing you set out to do]
-- **Secondary Objective 1:** [Supporting goal]
-- **Secondary Objective 2:** [Supporting goal]
-- **Secondary Objective 3:** [Remove if not applicable]
-
-> 💡 *Every analysis decision in this project traces back to one of these objectives.*
-
+- **Secondary Objective 4:** Evaluate how the volume of titles added to Netflix has changed over time.
+  
 ---
 
 ## 3. Project Scope & Tools
