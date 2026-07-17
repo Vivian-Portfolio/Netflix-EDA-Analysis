@@ -186,7 +186,7 @@ The U.S produces far more titles than any other count country, followed by India
 |-------------|--------------|----------|
 | Cleaned dataset | Netflix titles data with nulls handled, duplicates checked, and datetime fields formatted |  `data/raw/` |
 | Analysis notebook | Full cleaning, analysis, and visualization code | notebooks/`Netflix_EDA_Analysis.ipynb` |
-| Live notebook (Colab) | Interactive version, viewable/run directly in-browser | `[Open in Colab](https://colab.research.google.com/drive/1QX6vx8r_Wic1w4rT_OH2fMzlT4Nh90Sf?usp=sharing)`|
+| Live notebook (Colab) | Interactive version, viewable/run directly in-browser | `https://colab.research.google.com/drive/1QX6vx8r_Wic1w4rT_OH2fMzlT4Nh90Sf`|
 | Summary report | Written findings and insights | `reports/` |
 | Visualizations | Charts illustrating key trends | `visuals/` |
 ---
