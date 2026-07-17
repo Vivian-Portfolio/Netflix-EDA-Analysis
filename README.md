@@ -42,6 +42,7 @@
 **Approach:** Cleaned the raw dataset (handling missing values, duplicates, and formatting issues) in Python, then used pandas and visualizations to explore patterns in content type, production countries, ratings, and additions over time.
 
 **Outcome:** A cleaned, analysis-ready dataset and a set of visual insights showing that movies outweigh TV shows, the U.S. leads content production, TV-MA is the most common rating, and additions to the catalog peaked around 2019-2020.
+
 ---
 
 ## 2. Objectives
