@@ -35,8 +35,6 @@
 
 ## 1. Project Overview
 
-<!--
-
 **Context:** Netflix's catalog spans thousands of titles across countries, genres, and decades, but the raw dataset alone doesn't reveal patterns in how that catalog has grown or what it's made up of.
 
 **Problem Statement:** What trends exist in Netflix's content library - by type, country of production, rating, and growth over time - and what do those trends suggest about the platform's content strategy?
