@@ -36,9 +36,9 @@
 
 ## 1. Project Overview
 
-**Context:** Netflix's catalog spans thousands of titles across countries, genres, and decades, but the raw dataset alone doesn't reveal patterns in how that catalog has grown or what it's made up of.
+**Context:**Netflix has thousands of Movies and TV shows from different countries and gernes. This analysis helps understand what content is availble and how the library has changed over time.
 
-**Problem Statement:** What trends exist in Netflix's content library - by type, country of production, rating, and growth over time - and what do those trends suggest about the platform's content strategy?
+**Problem Statement:** The goals is to identify patterns in Netflix's content, such as content type, country of production, rating, and  yearly growth, to better understand the platform's content strategy. 
 
 **Approach:** Cleaned the raw dataset (handling missing values, duplicates, and formatting issues) in Python, then used pandas and visualizations to explore patterns in content type, production countries, ratings, and additions over time.
 
@@ -144,8 +144,6 @@ This was primarily exploratory examining the cleaned dataset to uncover patterns
 
 ## 7. Key Insights
 
-
-
 **Insight 1: Movies dominate the catalog**
 At 6,131 titles vs. 2,666 TV Shows, movies make up about 70% of Netflix's catalog in this dataset. This suggests Netflix's content strategy still leans heavily on film licensing/production even as TV Shows have grown as a category - useful context for anyone analyzing content investment priorities.
 
@@ -167,17 +165,20 @@ The U.S produces far more titles than any other count country, followed by India
 | High | Investigate why content additions declined after the 2019 peak - determine if this reflects a strategic shift toward original productions, rising licensing costs, or incomplete data for 2021 | Insight 2 - growth peaked in 2019 | Content Strategy / Data team |
 | Medium | Break down the movie-to-TV-show ratio by country to see if the 70/30 split holds globally or varies by region | Insight 1 - movie-heavy catalog | Content Acquisition team |
 | Low | Extend the analysis to include genre-level trends over time for a fuller picture of catalog evolution | Insight 3 - concentration in recent years | Data Analytics team |
+
 ---
 
 ## 9. Assumptions & Limitations
 ### Assumptions
-- The dataset was treated as a complete and accurate snapshot of Netflix's catalog at the time of extraction (via Kaggle), with no independent verification against Netflix's own records.
-- Missing director, cast, country, and rating values were assumed to be genuinely missing/unlisted rather than data entry errors, and were filled with "Unknown" rather than dropped.
+- The dataset was is complete and accurately  represents Netflix's content at the time of extraction (via Kaggle).
+- Missing director, cast, country, and rating values were assumed to mean that the information was unavailable, rather than data entry errors, were filled with "Unknown" rather than dropped.
+- The Cleaned dataset is suitable for exploratory data analysis.
 
 ### Limitations
 - The dataset only reflects titles available at one point in time - it does not capture titles that were removed from Netflix before or after this snapshot.
-- No viewer engagement or streaming data is included, so popularity or performance of titles cannot be assessed — only catalog composition.
+- No viewer engagement or streaming data is included, so popularity or performance of titles cannot be assessed - only catalog composition.
 - The date_added field marks when a title was added to Netflix, not when it was actually produced or released, which limits precision when comparing production trends across countries.
+  
 ---
 
 ## 10. Deliverables
