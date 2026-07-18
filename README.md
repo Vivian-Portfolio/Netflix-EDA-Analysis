@@ -194,8 +194,8 @@ The U.S produces far more titles than any other count country, followed by India
 
 ## 11. Author
 
-**Vivian Okwara
-**Data Analyst** | Lagos Nigeria**
+*Vivian Okwara*
+Data Analyst** | Lagos Nigeria
 
 
 - 🔗 https://Linkedin.com/in/okwara-vivian
