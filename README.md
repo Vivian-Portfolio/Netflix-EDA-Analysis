@@ -69,7 +69,7 @@
 |-----------|---------|
 | **In Scope** | 8,807 Netflix titles covering show ID, title, type, director, cast, country, date added, release year, rating, duration, and genre |
 | **Out of Scope** |Viewer engagement/streaming metrics, external ratings, or data on titles removed from the platform |
-| **Time Period** | 2008 – 2020 |
+| **Time Period** | 2008 - 2020 |
 | **Granularity** | Row-level data (one row per title) |
 
 ### Tools & Technologies
